@@ -1,0 +1,109 @@
+=== Prova 01 ====================================
+Aluna: Samara Revoredo da Silva
+Mat: 20170041498
+
+== Questão 1 ====================================
+
+
+
+
+== Questão 2 ====================================
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <malloc.h>
+#include <string.h>
+
+int main(){
+    int i, j, k,tam_lin,tam_col,tam_alt;
+    int ***Matriz,***Matriz_copia;
+    int num_bytes;
+
+    //Le o dimensionamento da Matriz
+    printf("-------------------------------------------------------\n");
+    printf("Bem vindo ao codigo de copia matrizes 3D\n");
+    printf("-------------------------------------------------------\n");
+    printf("Digite o num de linhas da matriz 3D:\n");
+    scanf("%i",&tam_lin);
+    printf("Digite o num de colunas da matriz 3D:\n");
+    scanf("%i",&tam_col);
+    printf("Digite a altura da matriz 3D:\n");
+    scanf("%i",&tam_alt);
+
+    //alocacao na memoria da Matriz
+    //faz a alocacao na memoria para as linhas
+    Matriz = (int***)malloc(tam_lin*sizeof(int**));
+    for(i=0; i < tam_lin; i++){
+        Matriz[i] = (int**)malloc(tam_col*sizeof(int*));//faz a alocacao para as colunas
+        for(j=0; j < tam_col; j++){
+            Matriz[i][j] = (int*)malloc(tam_alt*sizeof(int));//faz a alocacao para a altura
+        }
+    }
+
+    //alocacao na memoria da Matriz a ser copiada
+    //faz a alocacao na memoria para as linhas
+    Matriz_copia = ( int***)malloc(tam_lin*sizeof(int**));
+    for(i=0; i < tam_lin; i++){
+        Matriz[i] = (int**)malloc(tam_col*sizeof(int*));//faz a alocacao para as colunas
+        for(j=0; j < tam_col; j++){
+            Matriz[i][j] = (int*)malloc(tam_alt*sizeof(int));//faz a alocacao para a altura
+        }
+    }
+
+    printf("-------------------------------------------------------\n");
+    printf("Digite a matriz 3D [%d][%d][%d]:\n",tam_lin,tam_col,tam_alt);
+
+    //Le os elementos da matriz
+    for (i = 0; i < tam_lin;i++){
+        for(j = 0; j < tam_col;j++){
+            for(k = 0; k < tam_alt; k++){
+                printf("[%d][%d][%d] = ",i,j,k);
+                scanf("%d", &Matriz[i][j][k]);
+            }
+        }
+        printf("\n");
+    }
+    printf("-------------------------------------------------------\n");
+
+    //exibe a matriz
+    printf("A matriz 3D que voce digitou foi: \n");
+    for (i = 0; i < tam_lin;i++){
+        printf(" - Linha %d: \n",i);
+        for(j = 0; j < tam_col;j++){
+            for(k = 0; k < tam_alt; k++){
+                printf("%d ",Matriz[i][j][k]);
+            }
+        printf("\n");
+        }
+    printf("\n");
+    }
+
+    //faz o calculo do quanto de bytes devem ser copiados
+    num_bytes = tam_alt*tam_col*tam_lin*sizeof(int);
+
+    printf("-------------------------------------------------------\n");
+    printf("Numero de bytes da matriz: %d\n",num_bytes);
+
+    //copia Matriz para Matriz_copia
+    memcpy(Matriz_copia,Matriz,num_bytes);
+
+    //exibe a Matriz_copia
+    printf("-------------------------------------------------------\n");
+    printf("A matriz 3D COPIA: \n");
+    for (i = 0; i < tam_lin;i++){
+        printf(" - Linha %d: \n",i);
+        for(j = 0; j < tam_col;j++){
+            for(k = 0; k < tam_alt; k++){
+                printf("%d ",Matriz_copia[i][j][k]);
+            }
+        printf("\n");
+        }
+    printf("\n");
+    }
+
+    free(Matriz); //libera a memoria da matriz
+    free(Matriz_copia);//libera a memoria da matriz copia
+    return 0;
+}
+
+
